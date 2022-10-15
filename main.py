@@ -3,7 +3,6 @@ import json
 from os import path
 import os
 import subprocess
-from uuid import uuid4
 from tinydb import TinyDB, Query
 from dataclass.GlobalConfig import GlobalConfig
 
@@ -47,11 +46,11 @@ def getDmgInfo(files):
     print(files)
     lhash = md5(files.encode('utf-8')).hexdigest().upper()
     lhash = '/Volumes/TMP_'+lhash
+
     hdiutil_process = f'hdiutil attach {files} -mountpoint {lhash} -plist'
     p = subprocess.Popen(hdiutil_process,
                          stdout=subprocess.PIPE,
                          stderr=subprocess.PIPE, shell=True)
-    
     (plist, err) = p.communicate()
     if err:
         print("%s" % (err.decode('utf-8')))
